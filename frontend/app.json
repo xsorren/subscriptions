@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "House",
+    "slug": "house",
+    "scheme": "house",
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
