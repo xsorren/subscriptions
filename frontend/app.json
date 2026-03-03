@@ -3,9 +3,19 @@
     "name": "House",
     "slug": "house",
     "scheme": "house",
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ],
     "experiments": {
       "typedRoutes": true
+    },
+    "android": {
+      "package": "com.lautasorren.house"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
     }
   }
 }

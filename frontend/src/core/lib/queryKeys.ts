@@ -6,6 +6,7 @@ export const queryKeys = {
   },
   redemptions: {
     all: ['redemptions'] as const,
+    history: ['redemptions', 'history'] as const,
   },
   map: {
     discover: (params: { lat: number; lng: number; radiusMeters?: number; sportCode?: string }) =>
@@ -14,5 +15,12 @@ export const queryKeys = {
   clubs: {
     detail: (clubId: string) => ['clubDetail', clubId] as const,
     eligibility: (clubId: string) => ['clubEligibility', clubId] as const,
+  },
+  subscription: {
+    active: ['subscription', 'active'] as const,
+    periods: (subscriptionId: string) => ['subscription', 'periods', subscriptionId] as const,
+  },
+  profile: {
+    me: ['profile', 'me'] as const,
   },
 };

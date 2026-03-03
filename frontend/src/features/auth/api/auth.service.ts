@@ -1,17 +1,11 @@
-import { supabase } from '../../../core/lib/supabase';
-
 export async function signInWithOtp(email: string) {
-  const { error } = await supabase.auth.signInWithOtp({
-    email,
-    options: {
-      emailRedirectTo: 'house://',
-    },
-  });
-
-  if (error) throw error;
+  // Simular envío de OTP
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  console.log(`[Mock] OTP requested for ${email}`);
 }
 
 export async function signOut() {
-  const { error } = await supabase.auth.signOut();
-  if (error) throw error;
+  // Simular cierre de sesión
+  await new Promise(resolve => setTimeout(resolve, 500));
+  console.log('[Mock] User signed out');
 }

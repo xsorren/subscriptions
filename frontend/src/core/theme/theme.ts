@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { MD3DarkTheme, type MD3Theme } from 'react-native-paper';
 
 const colors = {
@@ -13,9 +14,31 @@ const colors = {
   error: '#F36B6B',
 };
 
+const fontConfig = {
+  displayLarge: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '900' },
+  displayMedium: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '900' },
+  displaySmall: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '800' },
+  headlineLarge: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '900' },
+  headlineMedium: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '800' },
+  headlineSmall: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '800' },
+  titleLarge: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '700' },
+  titleMedium: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '700' },
+  titleSmall: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '700' },
+  labelLarge: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '600' },
+  labelMedium: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '600' },
+  labelSmall: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-medium', fontWeight: '600' },
+  bodyLarge: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif', fontWeight: '500' },
+  bodyMedium: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif', fontWeight: '400' },
+  bodySmall: { fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif', fontWeight: '400' },
+} as const;
+
 export const houseTheme: MD3Theme = {
   ...MD3DarkTheme,
-  roundness: 14,
+  roundness: 20,
+  fonts: {
+    ...MD3DarkTheme.fonts,
+    ...fontConfig,
+  },
   colors: {
     ...MD3DarkTheme.colors,
     primary: colors.primary,

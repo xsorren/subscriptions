@@ -1,10 +1,10 @@
 export const env = {
-  supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL ?? '',
-  supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? '',
+  supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL ?? 'https://mock-project.supabase.co',
+  supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? 'mock-anon-key',
 };
 
 export function assertEnv() {
   if (!env.supabaseUrl || !env.supabaseAnonKey) {
-    throw new Error('Missing Supabase env vars');
+    console.warn('⚠️ Missing Supabase environment variables. App will run in static/mock mode.');
   }
 }

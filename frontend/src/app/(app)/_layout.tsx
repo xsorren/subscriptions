@@ -19,9 +19,10 @@ export default function AppLayout() {
       }}
     >
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="clubs/[clubId]" options={{ title: 'Club', headerShown: true }} />
-      <Stack.Screen name="coupons/[couponId]" options={{ title: 'Cupón', headerShown: true }} />
-      <Stack.Screen name="coupons/redeem-qr" options={{ title: 'Canje QR', headerShown: true }} />
+      <Stack.Screen name="clubs/[clubId]" options={{ title: 'Club' }} />
+      <Stack.Screen name="coupons/[couponId]" options={{ title: 'Cupón' }} />
+      <Stack.Screen name="coupons/redeem-qr" options={{ title: 'Canje QR' }} />
+      <Stack.Screen name="coupons/history" options={{ title: 'Historial de canjes' }} />
     </Stack>
   );
 }

@@ -1,6 +1,3 @@
-import { supabase } from '../../../core/lib/supabase';
-import { invokeEdgeFunction } from '../../../core/lib/edgeFunctions';
-
 export type CouponStatus = 'available' | 'reserved' | 'redeemed' | 'expired' | 'canceled';
 
 export type CouponListItem = {
@@ -8,7 +5,13 @@ export type CouponListItem = {
   status: CouponStatus;
   sport_id: number;
   expires_at: string | null;
-  metadata: Record<string, unknown>;
+  metadata: {
+    club_name?: string;
+    sport_name?: string;
+    service_name?: string;
+    image_url?: any;
+    redeemed_at?: string;
+  };
 };
 
 export type RedeemCouponInput = {
@@ -22,37 +25,87 @@ export type RedeemCouponResult = {
   status: 'ok';
 };
 
-export async function getMyCoupons() {
-  const { data, error } = await supabase
-    .from('coupons')
-    .select('id,status,sport_id,expires_at,metadata')
-    .order('created_at', { ascending: false });
+const mockCoupons: CouponListItem[] = [
+  { 
+    id: 'c1', 
+    status: 'available', 
+    sport_id: 1, 
+    expires_at: new Date(Date.now() + 86400000 * 3).toISOString(), 
+    metadata: { 
+      club_name: 'Padel House Palermo',
+      sport_name: 'Pádel',
+      service_name: 'Turno 90 min - Cancha Cristal',
+      image_url: require('../../../../assets/mock-images/padel.jpg')
+    } 
+  },
+  { 
+    id: 'c2', 
+    status: 'available', 
+    sport_id: 2, 
+    expires_at: new Date(Date.now() + 86400000 * 5).toISOString(), 
+    metadata: { 
+      club_name: 'SportClub Belgrano',
+      sport_name: 'Gimnasio',
+      service_name: 'Pase Libre Musculación',
+      image_url: require('../../../../assets/mock-images/gym.jpg')
+    } 
+  },
+  { 
+    id: 'c3', 
+    status: 'available', 
+    sport_id: 3, 
+    expires_at: new Date(Date.now() + 86400000 * 7).toISOString(), 
+    metadata: { 
+      club_name: 'AquaCenter Recoleta',
+      sport_name: 'Natación',
+      service_name: 'Pileta Libre 60 min',
+      image_url: require('../../../../assets/mock-images/swim.jpg')
+    } 
+  },
+  { 
+    id: 'c4', 
+    status: 'redeemed', 
+    sport_id: 1, 
+    expires_at: new Date(Date.now() - 86400000 * 2).toISOString(), 
+    metadata: { 
+      club_name: 'El Balcón Padel',
+      sport_name: 'Pádel',
+      service_name: 'Turno 90 min',
+      image_url: require('../../../../assets/mock-images/padel2.jpg'),
+      redeemed_at: new Date(Date.now() - 86400000 * 3).toISOString()
+    } 
+  },
+  { 
+    id: 'c5', 
+    status: 'expired', 
+    sport_id: 4, 
+    expires_at: new Date(Date.now() - 86400000 * 10).toISOString(), 
+    metadata: { 
+      club_name: 'CrossFit Rex',
+      sport_name: 'Crossfit',
+      service_name: 'Clase WOD',
+      image_url: require('../../../../assets/mock-images/crossfit.jpg')
+    } 
+  },
+];
 
-  if (error) throw error;
-  return (data ?? []) as CouponListItem[];
+export async function getMyCoupons() {
+  await new Promise(resolve => setTimeout(resolve, 800));
+  return mockCoupons;
 }
 
 export async function getCouponById(couponId: string) {
-  const { data, error } = await supabase
-    .from('coupons')
-    .select('id,status,sport_id,expires_at,metadata')
-    .eq('id', couponId)
-    .single();
-
-  if (error) throw error;
-  return data as CouponListItem;
+  await new Promise(resolve => setTimeout(resolve, 500));
+  const coupon = mockCoupons.find(c => c.id === couponId) || mockCoupons[0];
+  return coupon;
 }
 
 export async function createQrToken(couponId: string) {
-  return invokeEdgeFunction<{ token: string; expiresAt: string }>('create-qr-token', {
-    couponId,
-  });
+  await new Promise(resolve => setTimeout(resolve, 1000)); // Simula tiempo de generación
+  return { token: `mock-qr-${Math.random().toString(36).substring(7)}`, expiresAt: new Date(Date.now() + 60000).toISOString() };
 }
 
 export async function redeemCoupon(input: RedeemCouponInput) {
-  return invokeEdgeFunction<RedeemCouponResult>('redeem-coupon', {
-    qrNonce: input.qrNonce,
-    clubBranchId: input.clubBranchId,
-    idempotencyKey: input.idempotencyKey,
-  });
+  await new Promise(resolve => setTimeout(resolve, 1500)); // Simula validación compleja
+  return { redemptionId: `red-${Math.random().toString(36).substring(7)}`, status: 'ok' as const };
 }
